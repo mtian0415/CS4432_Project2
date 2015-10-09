@@ -13,6 +13,7 @@ public class TableInfo {
    private Map<String,Integer> offsets;
    private int recordlen;
    private String tblname;
+   private boolean isSorted;
    
    /**
     * Creates a TableInfo object, given a table name
@@ -25,6 +26,7 @@ public class TableInfo {
    public TableInfo(String tblname, Schema schema) {
       this.schema = schema;
       this.tblname = tblname;
+      this.isSorted = false;
       offsets  = new HashMap<String,Integer>();
       int pos = 0;
       for (String fldname : schema.fields()) {
@@ -44,11 +46,12 @@ public class TableInfo {
     * @param offsets the already-calculated offsets of the fields within a record
     * @param recordlen the already-calculated length of each record
     */
-   public TableInfo(String tblname, Schema schema, Map<String,Integer> offsets, int recordlen) {
+   public TableInfo(String tblname, Schema schema, Map<String,Integer> offsets, int recordlen, boolean isSorted) {
       this.tblname   = tblname;
       this.schema    = schema;
       this.offsets   = offsets;
       this.recordlen = recordlen;
+      this.isSorted = isSorted;
    }
    
    /**
@@ -92,5 +95,17 @@ public class TableInfo {
          return INT_SIZE;
       else
          return STR_SIZE(schema.length(fldname));
+   }
+   
+   public boolean getIsSorted() {
+	   return this.isSorted;
+   }
+   
+   public void setIsSorted(boolean isSorted) {
+	   this.isSorted = isSorted;
+   }
+   
+   public String getTableName() {
+	   return this.tblname;
    }
 }

@@ -41,7 +41,9 @@ public class SortPlan implements Plan {
       src.close();
       while (runs.size() > 2)
          runs = doAMergeIteration(runs);
-      return new SortScan(runs, comp);
+      
+      //return new SortScan(runs, comp);
+      return new SortScanExtend(runs, comp, (TablePlan)this.p, tx);
    }
    
    /**
