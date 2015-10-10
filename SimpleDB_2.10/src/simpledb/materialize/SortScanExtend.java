@@ -11,6 +11,7 @@ import simpledb.remote.SimpleConnection;
 import simpledb.server.SimpleDB;
 import simpledb.tx.Transaction;
 
+/* CS4432: new class extends SortScan by Mi Tian, Yuchen Liu */
 public class SortScanExtend extends SortScan {
 	private TableInfo tableInfo;
 	private Schema schema;
@@ -24,16 +25,22 @@ public class SortScanExtend extends SortScan {
 		this.tableInfo = p.getTableInfo();
 		this.tx = tx;
 		this.originalTable.beforeFirst();
+		System.out.println("SortScanExtended is "
+				+ (this.tableInfo.getIsSorted() ? "Sorted" : "Not Sorted"));
+	}
+
+	public void beforeFirst() {
+		if (this.tableInfo.getIsSorted()) {
+			this.originalTable.beforeFirst();
+		} else {
+			super.beforeFirst();
+		}
 	}
 
 	public boolean next() {
 		if (this.tableInfo.getIsSorted()) {
-			System.out.println("Table " + this.tableInfo.fileName()
-					+ " is sorted already");
 			return this.originalTable.next();
 		} else {
-			System.out.println("Table " + this.tableInfo.fileName()
-					+ " is NOT sorted");
 			boolean next = super.next();
 
 			// copy sorted table into original table
@@ -57,18 +64,46 @@ public class SortScanExtend extends SortScan {
 	}
 
 	public Constant getVal(String fieldName) {
-		return this.originalTable.getVal(fieldName);
+		if (this.tableInfo.getIsSorted()) {
+			return this.originalTable.getVal(fieldName);
+		} else {
+			return super.getVal(fieldName);
+		}
 	}
 
 	public int getInt(String fieldName) {
-		return this.originalTable.getInt(fieldName);
+		if (this.tableInfo.getIsSorted()) {
+			return this.originalTable.getInt(fieldName);
+		} else {
+			return super.getInt(fieldName);
+		}
 	}
 
 	public String getString(String fieldName) {
-		return this.originalTable.getString(fieldName);
+		if (this.tableInfo.getIsSorted()) {
+			return this.originalTable.getString(fieldName);
+		} else {
+			return super.getString(fieldName);
+		}
 	}
 
 	public boolean hasField(String fieldName) {
-		return this.originalTable.hasField(fieldName);
+		if (this.tableInfo.getIsSorted()) {
+			return this.originalTable.hasField(fieldName);
+		} else {
+			return super.hasField(fieldName);
+		}
+	}
+	
+	public void savePosition() {
+		if(!this.tableInfo.getIsSorted()) {
+			super.savePosition();
+		}
+	}
+	
+	public void restorePosition() {
+		if(!this.tableInfo.getIsSorted()) {
+			super.restorePosition();
+		}
 	}
 }

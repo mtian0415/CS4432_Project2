@@ -97,14 +97,17 @@ public class TableInfo {
          return STR_SIZE(schema.length(fldname));
    }
    
+   /* CS4432: modified by Mi Tian, Yuchen Liu */
    public boolean getIsSorted() {
 	   return this.isSorted;
    }
    
+   /* CS4432: modified by Mi Tian, Yuchen Liu */
    public void setIsSorted(boolean isSorted) {
 	   this.isSorted = isSorted;
    }
-   
+  
+   /* CS4432: modified by Mi Tian, Yuchen Liu */
    public String getTableName() {
 	   return this.tblname;
    }

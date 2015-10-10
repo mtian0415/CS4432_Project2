@@ -27,11 +27,13 @@ public class SortScan implements Scan {
     */
    public SortScan(List<TempTable> runs, RecordComparator comp) {
       this.comp = comp;
-      s1 = (UpdateScan) runs.get(0).open();
-      hasmore1 = s1.next();
-      if (runs.size() > 1) {
-         s2 = (UpdateScan) runs.get(1).open();
-         hasmore2 = s2.next();
+      if(runs != null) {
+    	  s1 = (UpdateScan) runs.get(0).open();
+          hasmore1 = s1.next();
+          if (runs.size() > 1) {
+             s2 = (UpdateScan) runs.get(1).open();
+             hasmore2 = s2.next();
+          }
       }
    }
    

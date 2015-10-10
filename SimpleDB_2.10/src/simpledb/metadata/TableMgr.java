@@ -32,6 +32,8 @@ public class TableMgr {
 	public TableMgr(boolean isNew, Transaction tx) {
 		Schema tcatSchema = new Schema();
 		tcatSchema.addStringField("tblname", MAX_NAME);
+
+		/* CS4432: modified by Mi Tian, Yuchen Liu */  
 		tcatSchema.addIntField("isSorted");
 		tcatSchema.addIntField("reclength");
 		tcatInfo = new TableInfo("tblcat", tcatSchema);
@@ -66,6 +68,8 @@ public class TableMgr {
 		RecordFile tcatfile = new RecordFile(tcatInfo, tx);
 		tcatfile.insert();
 		tcatfile.setString("tblname", tblname);
+		
+		/* CS4432: modified by Mi Tian, Yuchen Liu */
 		tcatfile.setInt("isSorted", 0);
 		tcatfile.setInt("reclength", ti.recordLength());
 		tcatfile.close();
@@ -98,6 +102,7 @@ public class TableMgr {
 		int isSorted = 0;
 		while (tcatfile.next()) {
 			if (tcatfile.getString("tblname").equals(tblname)) {
+				/* CS4432: modified by Mi Tian, Yuchen Liu */
 				isSorted = tcatfile.getInt("isSorted");
 				reclen = tcatfile.getInt("reclength");
 				break;
@@ -106,6 +111,7 @@ public class TableMgr {
 		tcatfile.close();
 
 		RecordFile fcatfile = new RecordFile(fcatInfo, tx);
+		fcatfile.beforeFirst();
 		Schema sch = new Schema();
 		Map<String, Integer> offsets = new HashMap<String, Integer>();
 		while (fcatfile.next()) {
@@ -119,9 +125,12 @@ public class TableMgr {
 			}
 		}
 		fcatfile.close();
+		
+		/* CS4432: modified by Mi Tian, Yuchen Liu */
 		return new TableInfo(tblname, sch, offsets, reclen, (isSorted == 1));
 	}
 
+	/* CS4432: modified by Mi Tian, Yuchen Liu */
 	public void updateTableInfo(TableInfo ti, Transaction tx) {
 		String tableName = ti.getTableName();
 		RecordFile tcatFile = new RecordFile(this.tcatInfo, tx);
