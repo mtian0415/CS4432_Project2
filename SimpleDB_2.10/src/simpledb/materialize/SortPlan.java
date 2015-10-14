@@ -59,6 +59,7 @@ public class SortPlan implements Plan {
 				runs = doAMergeIteration(runs);
 		}
 		
+		//return new SortScan(runs, comp);
 		return new SortScanExtend(runs, comp, (TablePlan) this.p, tx);
 	}
 

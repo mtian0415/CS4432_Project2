@@ -1,15 +1,16 @@
 package simpledb.metadata;
 
+import java.util.*;
 import simpledb.tx.Transaction;
 import simpledb.record.*;
-import java.util.*;
 
 /**
- * The table manager. There are methods to create a table, save the metadata in
- * the catalog, and obtain the metadata of a previously-created table.
+ * CS4432, modified by Mi Tian, Yuchen Liu The table manager. There are methods
+ * to create a table, save the metadata in the catalog, and obtain the metadata
+ * of a previously-created table.
  * 
  * @author Edward Sciore
- *
+ * 
  */
 public class TableMgr {
 	/**
@@ -32,8 +33,6 @@ public class TableMgr {
 	public TableMgr(boolean isNew, Transaction tx) {
 		Schema tcatSchema = new Schema();
 		tcatSchema.addStringField("tblname", MAX_NAME);
-
-		/* CS4432: modified by Mi Tian, Yuchen Liu */  
 		tcatSchema.addIntField("isSorted");
 		tcatSchema.addIntField("reclength");
 		tcatInfo = new TableInfo("tblcat", tcatSchema);
@@ -68,8 +67,6 @@ public class TableMgr {
 		RecordFile tcatfile = new RecordFile(tcatInfo, tx);
 		tcatfile.insert();
 		tcatfile.setString("tblname", tblname);
-		
-		/* CS4432: modified by Mi Tian, Yuchen Liu */
 		tcatfile.setInt("isSorted", 0);
 		tcatfile.setInt("reclength", ti.recordLength());
 		tcatfile.close();
@@ -98,13 +95,11 @@ public class TableMgr {
 	 */
 	public TableInfo getTableInfo(String tblname, Transaction tx) {
 		RecordFile tcatfile = new RecordFile(tcatInfo, tx);
-		int reclen = -1;
-		int isSorted = 0;
+		int reclen = -1, sorted = 0;
 		while (tcatfile.next()) {
 			if (tcatfile.getString("tblname").equals(tblname)) {
-				/* CS4432: modified by Mi Tian, Yuchen Liu */
-				isSorted = tcatfile.getInt("isSorted");
 				reclen = tcatfile.getInt("reclength");
+				sorted = tcatfile.getInt("isSorted");
 				break;
 			}
 		}
@@ -124,29 +119,33 @@ public class TableMgr {
 				sch.addField(fldname, fldtype, fldlen);
 			}
 		}
+
 		fcatfile.close();
-		
-		/* CS4432: modified by Mi Tian, Yuchen Liu */
-		return new TableInfo(tblname, sch, offsets, reclen, (isSorted == 1));
+		TableInfo ti = new TableInfo(tblname, sch, offsets, reclen);
+		if (sorted == 1) {
+			ti.setIsSorted(true);
+		} else {
+			ti.setIsSorted(false);
+		}
+		return ti;
 	}
 
-	/* CS4432: modified by Mi Tian, Yuchen Liu */
 	public void updateTableInfo(TableInfo ti, Transaction tx) {
-		String tableName = ti.getTableName();
-		RecordFile tcatFile = new RecordFile(this.tcatInfo, tx);
+		String tblname = ti.getTableName();
+		int sorted = 0;
+		RecordFile tcatfile = new RecordFile(tcatInfo, tx);
 
-		int isSorted = 0;
+		// If the table is sorted, set sorted to true (i.e 1);
 		if (ti.getIsSorted()) {
-			isSorted = 1;
+			sorted = 1;
 		}
 
-		// set the isSorted field of the table entry
-		while (tcatFile.next()) {
-			if (tcatFile.getString("tblname").equals(tableName)) {
-				tcatFile.setInt("isSorted", isSorted);
+		while (tcatfile.next()) {
+			if (tcatfile.getString("tblname").equals(tblname)) {
+				tcatfile.setInt("isSorted", sorted);
 				break;
 			}
 		}
-		tcatFile.close();
+		tcatfile.close();
 	}
 }

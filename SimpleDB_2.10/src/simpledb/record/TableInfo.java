@@ -46,12 +46,12 @@ public class TableInfo {
     * @param offsets the already-calculated offsets of the fields within a record
     * @param recordlen the already-calculated length of each record
     */
-   public TableInfo(String tblname, Schema schema, Map<String,Integer> offsets, int recordlen, boolean isSorted) {
+   public TableInfo(String tblname, Schema schema, Map<String,Integer> offsets, int recordlen) {
       this.tblname   = tblname;
       this.schema    = schema;
       this.offsets   = offsets;
       this.recordlen = recordlen;
-      this.isSorted = isSorted;
+      this.isSorted = false;
    }
    
    /**

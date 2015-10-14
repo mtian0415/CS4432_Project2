@@ -23,6 +23,7 @@ public class SortScanExtend extends SortScan {
 		super(runs, comp);
 		this.originalTable = (UpdateScan) p.open();
 		this.tableInfo = p.getTableInfo();
+		this.schema = this.tableInfo.schema();
 		this.tx = tx;
 		this.originalTable.beforeFirst();
 		System.out.println("SortScanExtended is "

@@ -6,6 +6,7 @@ import simpledb.tx.Transaction;
 import simpledb.log.LogMgr;
 import simpledb.metadata.MetadataMgr;
 import simpledb.planner.*;
+import simpledb.opt.ExploitSortQueryPlanner;
 import simpledb.opt.HeuristicQueryPlanner;
 import simpledb.index.planner.IndexUpdatePlanner;
 
@@ -23,7 +24,7 @@ import simpledb.index.planner.IndexUpdatePlanner;
  * @author Edward Sciore
  */
 public class SimpleDB {
-   public static int BUFFER_SIZE = 8;
+   public static int BUFFER_SIZE = 500;
    public static String LOG_FILE = "simpledb.log";
    
    private static FileMgr     fm;
@@ -104,4 +105,12 @@ public class SimpleDB {
       UpdatePlanner uplanner = new BasicUpdatePlanner();
       return new Planner(qplanner, uplanner);
    }
+    
+    public static Planner ExploitSortQueryPlanner() {
+    	// CS4432 Project 2: modified by Mi Tian, Yuchen Liu
+    	QueryPlanner qplanner = new ExploitSortQueryPlanner();
+    	//QueryPlanner qplanner = new BasicQueryPlanner();
+    	UpdatePlanner uplanner = new BasicUpdatePlanner();
+    	return new Planner(qplanner, uplanner);
+    }
 }

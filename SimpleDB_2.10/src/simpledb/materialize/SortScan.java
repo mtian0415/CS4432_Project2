@@ -146,7 +146,7 @@ public class SortScan implements Scan {
       RID rid1 = savedposition.get(0);
       RID rid2 = savedposition.get(1);
       s1.moveToRid(rid1);
-      if (rid2 != null)
+      if (s2 != null)
          s2.moveToRid(rid2);
    }
 }
