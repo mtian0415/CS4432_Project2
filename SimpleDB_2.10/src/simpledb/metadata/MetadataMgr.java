@@ -45,7 +45,9 @@ public class MetadataMgr {
       return statmgr.getStatInfo(tblname, ti, tx);
    }
    
-   /* CS4432: modified by Mi Tian, Yuchen Liu */  
+   /* CS4432-Project2(Task4,5): modified by Mi Tian, Yuchen Liu
+    * update the table information to indicate the table is already sorted
+    */
    public void updateSortedTable(TableInfo ti, Transaction tx) {
 	   tblmgr.updateTableInfo(ti, tx);
    }

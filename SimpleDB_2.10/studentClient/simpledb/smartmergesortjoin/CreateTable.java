@@ -8,9 +8,12 @@ import java.util.Random;
 
 import simpledb.remote.SimpleDriver;
 
+/* CS4432-Project2(Task4,5): a test client created by Mi Tian, Yuchen Liu
+* This class creates a table 
+*/
 public class CreateTable {
 
-	final static int maxSize = 20;
+	final static int maxSize = 30;
 
 	/**
 	 * @param args
@@ -25,7 +28,7 @@ public class CreateTable {
 			conn = d.connect("jdbc:simpledb://localhost", null);
 			Statement stmt = conn.createStatement();
 
-			System.out.println("create table test1 (a1 int, a2 int)");
+			System.out.println("create table test1 (a1 int, a2 int, rName varchar(10))");
 			stmt.executeUpdate("create table test1 (a1 int, a2 int)");
 
 			System.out.println("create table test1 (a3 int, a4 int)");
@@ -33,11 +36,11 @@ public class CreateTable {
 
 			Random rand =  new Random(1);
 			String query;
-			System.out.println("insert into test1 (a1, a2)");
+			System.out.println("insert into test1 (a1, a2, sName varchar(10))");
 			for (int j = 0; j < maxSize; j++) {
 				System.out.println("insert " + j);
 				query = "insert into test1(a1, a2) values ("
-						+ rand.nextInt(500) + "," + rand.nextInt(500) + ")";
+						+ rand.nextInt(500) + "," + rand.nextInt(500) + ", 'void' )";
 				stmt.executeUpdate(query);
 			}
 
@@ -45,7 +48,7 @@ public class CreateTable {
 			System.out.println("insert into test2 (a3, a4)");
 			for (int j = 0; j < maxSize; j++) {
 				query = "insert into test2(a3, a4) values ("
-						+ rand.nextInt(500) + "," + rand.nextInt(500) + ")";
+						+ rand.nextInt(500) + "," + rand.nextInt(500) + ", 'void' )";
 				stmt.executeUpdate(query);
 			}
 

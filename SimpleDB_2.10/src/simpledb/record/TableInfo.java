@@ -26,7 +26,6 @@ public class TableInfo {
    public TableInfo(String tblname, Schema schema) {
       this.schema = schema;
       this.tblname = tblname;
-      this.isSorted = false;
       offsets  = new HashMap<String,Integer>();
       int pos = 0;
       for (String fldname : schema.fields()) {
@@ -34,6 +33,7 @@ public class TableInfo {
          pos += lengthInBytes(fldname);
       }
       recordlen = pos;
+      this.isSorted = false;
    }
    
    /**
@@ -97,17 +97,17 @@ public class TableInfo {
          return STR_SIZE(schema.length(fldname));
    }
    
-   /* CS4432: modified by Mi Tian, Yuchen Liu */
+   /* CS4432-Project2(Task4,5): by Mi Tian, Yuchen Liu */
    public boolean getIsSorted() {
 	   return this.isSorted;
    }
    
-   /* CS4432: modified by Mi Tian, Yuchen Liu */
+   /* CS4432-Project2(Task4,5): by Mi Tian, Yuchen Liu */
    public void setIsSorted(boolean isSorted) {
 	   this.isSorted = isSorted;
    }
   
-   /* CS4432: modified by Mi Tian, Yuchen Liu */
+   /* CS4432-Project2(Task4,5): by Mi Tian, Yuchen Liu */
    public String getTableName() {
 	   return this.tblname;
    }

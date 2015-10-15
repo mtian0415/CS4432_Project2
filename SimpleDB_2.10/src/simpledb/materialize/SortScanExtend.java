@@ -11,7 +11,10 @@ import simpledb.remote.SimpleConnection;
 import simpledb.server.SimpleDB;
 import simpledb.tx.Transaction;
 
-/* CS4432: new class extends SortScan by Mi Tian, Yuchen Liu */
+/* CS4432-Project2(Task4,5): new class extends SortScan by Mi Tian, Yuchen Liu 
+ * This class extends the original SortScan class and overwrites all of it functions
+ * so that if the table is already sorted, it will use it directly instead of sorting them again
+ * */
 public class SortScanExtend extends SortScan {
 	private TableInfo tableInfo;
 	private Schema schema;

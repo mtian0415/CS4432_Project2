@@ -107,7 +107,7 @@ public class SimpleDB {
    }
     
     public static Planner ExploitSortQueryPlanner() {
-    	// CS4432 Project 2: modified by Mi Tian, Yuchen Liu
+    	// CS4432-Project2(Task4,5): modified by Mi Tian, Yuchen Liu
     	QueryPlanner qplanner = new ExploitSortQueryPlanner();
     	//QueryPlanner qplanner = new BasicQueryPlanner();
     	UpdatePlanner uplanner = new BasicUpdatePlanner();

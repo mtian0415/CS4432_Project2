@@ -5,7 +5,8 @@ import simpledb.tx.Transaction;
 import simpledb.record.*;
 
 /**
- * CS4432, modified by Mi Tian, Yuchen Liu The table manager. There are methods
+ * 
+ * The table manager. There are methods
  * to create a table, save the metadata in the catalog, and obtain the metadata
  * of a previously-created table.
  * 
@@ -33,8 +34,10 @@ public class TableMgr {
 	public TableMgr(boolean isNew, Transaction tx) {
 		Schema tcatSchema = new Schema();
 		tcatSchema.addStringField("tblname", MAX_NAME);
-		tcatSchema.addIntField("isSorted");
+		
+		// CS4432-Project2(Task4,5): modified by Mi Tian, Yuchen Liu
 		tcatSchema.addIntField("reclength");
+		tcatSchema.addIntField("isSorted");
 		tcatInfo = new TableInfo("tblcat", tcatSchema);
 
 		Schema fcatSchema = new Schema();
@@ -67,8 +70,10 @@ public class TableMgr {
 		RecordFile tcatfile = new RecordFile(tcatInfo, tx);
 		tcatfile.insert();
 		tcatfile.setString("tblname", tblname);
-		tcatfile.setInt("isSorted", 0);
+		
+		// CS4432-Project2(Task4,5): modified by Mi Tian, Yuchen Liu
 		tcatfile.setInt("reclength", ti.recordLength());
+		tcatfile.setInt("isSorted", 0);
 		tcatfile.close();
 
 		// insert a record into fldcat for each field
@@ -99,7 +104,9 @@ public class TableMgr {
 		while (tcatfile.next()) {
 			if (tcatfile.getString("tblname").equals(tblname)) {
 				reclen = tcatfile.getInt("reclength");
+				// CS4432-Project2(Task4,5): modified by Mi Tian, Yuchen Liu
 				sorted = tcatfile.getInt("isSorted");
+				
 				break;
 			}
 		}
@@ -130,6 +137,7 @@ public class TableMgr {
 		return ti;
 	}
 
+	// CS4432-Project2(Task4,5): modified by Mi Tian, Yuchen Liu
 	public void updateTableInfo(TableInfo ti, Transaction tx) {
 		String tblname = ti.getTableName();
 		int sorted = 0;

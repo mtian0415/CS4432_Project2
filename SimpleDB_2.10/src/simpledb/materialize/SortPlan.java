@@ -35,7 +35,7 @@ public class SortPlan implements Plan {
 	}
 
 	/**
-	 * CS4432: modified by Mi Tian, Yuchen Liu
+	 * CS4432-Project2(Task4,5): modified by Mi Tian, Yuchen Liu
 	 * This method is where most of the action is. Up to 2 sorted temporary
 	 * tables are created, and are passed into SortScan for final merging.
 	 * 
