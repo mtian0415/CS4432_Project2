@@ -13,7 +13,7 @@ import simpledb.remote.SimpleDriver;
 */
 public class CreateTable {
 
-	final static int maxSize = 30;
+	final static int maxSize = 10000;
 
 	/**
 	 * @param args
@@ -40,7 +40,7 @@ public class CreateTable {
 			for (int j = 0; j < maxSize; j++) {
 				System.out.println("insert " + j);
 				query = "insert into test1(a1, a2) values ("
-						+ rand.nextInt(500) + "," + rand.nextInt(500) + ", 'void' )";
+						+ rand.nextInt(maxSize) + "," + rand.nextInt(maxSize) + ", 'void' )";
 				stmt.executeUpdate(query);
 			}
 
@@ -48,7 +48,7 @@ public class CreateTable {
 			System.out.println("insert into test2 (a3, a4)");
 			for (int j = 0; j < maxSize; j++) {
 				query = "insert into test2(a3, a4) values ("
-						+ rand.nextInt(500) + "," + rand.nextInt(500) + ", 'void' )";
+						+ rand.nextInt(maxSize) + "," + rand.nextInt(maxSize) + ", 'void' )";
 				stmt.executeUpdate(query);
 			}
 

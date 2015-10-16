@@ -1,0 +1,6 @@
+Run "StartUp" class from src/simpledb.server
+Run "CreateTable" class from studentclient/simpledb.smartmergejoin, wait until it completes
+Run "RunQuery" class from studentclient/simpledb.smartmergejoin, this will take a while because it's doing the query for 10000 records.
+The result should show a compare of unsorted vs sorted. Sorted takes much shorter time.
+
+Every time run it, need to delete the 4432db folder completely.
