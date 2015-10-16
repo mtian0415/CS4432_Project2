@@ -35,7 +35,8 @@ public class RunQuery {
 						+ rs.getInt("a3") + " a2 : " + rs.getInt("a2"));
 			}
 			time1 = System.currentTimeMillis();
-			System.out.println("This query took: " + (time1 - time0) + " ms\n");
+			System.out.println("---> This query took: " + (time1 - time0) + " ms\n");
+			System.out.println("-----------------------------------------------------");
 
 			// Run the same query again, this time it should be sorted and take
 			// less time.
@@ -48,8 +49,8 @@ public class RunQuery {
 						+ rs.getInt("a3") + " a2 : " + rs.getInt("a2"));
 			}
 			time1 = System.currentTimeMillis();
-			System.out.println("This query took: " + (time1 - time0) + " ms\n");
-
+			System.out.println("---> This query took: " + (time1 - time0) + " ms\n");
+			System.out.println("-----------------------------------------------------");
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
